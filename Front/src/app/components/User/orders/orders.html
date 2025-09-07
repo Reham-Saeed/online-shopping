@@ -1,0 +1,167 @@
+<div class="p-6 max-w-5xl mx-auto space-y-6">
+  <h1 class="text-2xl font-bold mb-4">My Orders</h1>
+
+  <div
+    *ngFor="let order of orders"
+    class="bg-white shadow rounded-xl p-6 space-y-4"
+  >
+    <!-- Order Status Progress -->
+    <div class="bg-gray-50 p-4 rounded-lg">
+      <div class="flex items-center justify-between">
+        <!-- Placed -->
+        <div class="flex flex-col items-center">
+          <div
+            class="w-6 h-6 rounded-full flex items-center justify-center mb-1"
+            [ngClass]="{
+              'bg-green-500': order.status && order.status !== 'pending',
+              'bg-gray-300': !order.status || order.status === 'pending'
+            }"
+          >
+            <span class="text-white font-bold text-xs">1</span>
+          </div>
+          <span
+            class="text-xs"
+            [ngClass]="{
+              'text-green-600': order.status && order.status !== 'pending',
+              'text-gray-500': !order.status || order.status === 'pending'
+            }"
+            >Placed</span
+          >
+        </div>
+
+        <div class="flex-1 h-0.5 bg-gray-300 mx-2"></div>
+
+        <!-- Processing -->
+        <div class="flex flex-col items-center">
+          <div
+            class="w-6 h-6 rounded-full flex items-center justify-center mb-1"
+            [ngClass]="{
+              'bg-blue-500': ['processing', 'shipped', 'delivered'].includes(
+                order.status ?? ''
+              ),
+              'bg-gray-300': !['processing', 'shipped', 'delivered'].includes(
+                order.status ?? ''
+              )
+            }"
+          >
+            <span class="text-white font-bold text-xs">2</span>
+          </div>
+          <span
+            class="text-xs"
+            [ngClass]="{
+              'text-blue-600': ['processing', 'shipped', 'delivered'].includes(
+                order.status ?? ''
+              ),
+              'text-gray-500': !['processing', 'shipped', 'delivered'].includes(
+                order.status ?? ''
+              )
+            }"
+            >Processing</span
+          >
+        </div>
+
+        <div class="flex-1 h-0.5 bg-gray-300 mx-2"></div>
+
+        <!-- Shipped -->
+        <div class="flex flex-col items-center">
+          <div
+            class="w-6 h-6 rounded-full flex items-center justify-center mb-1"
+            [ngClass]="{
+              'bg-indigo-500': ['shipped', 'delivered'].includes(
+                order.status ?? ''
+              ),
+              'bg-gray-300': !['shipped', 'delivered'].includes(
+                order.status ?? ''
+              )
+            }"
+          >
+            <span class="text-white font-bold text-xs">3</span>
+          </div>
+          <span
+            class="text-xs"
+            [ngClass]="{
+              'text-indigo-600': ['shipped', 'delivered'].includes(
+                order.status ?? ''
+              ),
+              'text-gray-500': !['shipped', 'delivered'].includes(
+                order.status ?? ''
+              )
+            }"
+            >Shipped</span
+          >
+        </div>
+
+        <div class="flex-1 h-0.5 bg-gray-300 mx-2"></div>
+
+        <!-- Delivered -->
+        <div class="flex flex-col items-center">
+          <div
+            class="w-6 h-6 rounded-full flex items-center justify-center mb-1"
+            [ngClass]="{
+              'bg-green-600': order.status === 'delivered',
+              'bg-gray-300': order.status !== 'delivered'
+            }"
+          >
+            <span class="text-white font-bold text-xs">4</span>
+          </div>
+          <span
+            class="text-xs"
+            [ngClass]="{
+              'text-green-600': order.status === 'delivered',
+              'text-gray-500': order.status !== 'delivered'
+            }"
+            >Delivered</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Header -->
+    <div class="flex justify-between items-center border-b pb-2">
+      <h2 class="font-semibold text-gray-800">Order #{{ order._id }}</h2>
+      <span class="text-sm text-gray-600 capitalize">{{ order.status }}</span>
+    </div>
+
+    <!-- Customer Info -->
+    <div class="space-y-1 text-gray-700">
+      <p><strong>Name:</strong> {{ order.user.name }}</p>
+      <p><strong>Email:</strong> {{ order.user.email }}</p>
+      <p *ngIf="order.user.phone">
+        <strong>Phone:</strong> {{ order.user.phone }}
+      </p>
+      <p *ngIf="order.user.address">
+        <strong>Address:</strong> {{ order.user.address }}
+      </p>
+    </div>
+
+    <!-- Items -->
+    <div class="space-y-2">
+      <h3 class="font-semibold text-gray-800">Items</h3>
+      <div
+        *ngFor="let item of order.items"
+        class="flex justify-between bg-gray-50 p-3 rounded-lg"
+      >
+        <div class="flex items-center gap-4">
+          <img
+            [src]="item.product.image"
+            alt="{{ item.product.title }}"
+            class="w-12 h-12 object-cover rounded"
+          />
+          <div>
+            <p class="font-medium text-gray-800">{{ item.product.title }}</p>
+            <p class="text-sm text-gray-600">Qty: {{ item.quantity }}</p>
+          </div>
+        </div>
+        <div class="font-semibold text-gray-800">
+          ${{ (item.price * item.quantity).toFixed(2) }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="flex justify-between font-bold text-gray-800 pt-2 border-t">
+      <span>Total</span>
+      <span>${{ order.totalPrice.toFixed(2) }}</span>
+    </div>
+  </div>
+</div>

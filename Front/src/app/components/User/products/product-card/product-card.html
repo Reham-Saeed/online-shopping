@@ -1,0 +1,44 @@
+<div
+  class="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden relative"
+  [routerLink]="'/products/' + product.route"
+>
+  <!-- Product Image -->
+  <div class="relative overflow-hidden">
+    <img
+      [src]="staticURL + product.image"
+      [alt]="product.title"
+      class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+    />
+
+    <!-- Out of Stock Badge -->
+    <div class="absolute top-3 left-3">
+      <span
+        *ngIf="product.stock === 0"
+        class="bg-rose-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow"
+      >
+        Out of Stock
+      </span>
+    </div>
+  </div>
+
+  <!-- Product Info -->
+  <div class="p-4 flex flex-col gap-3">
+    <h3
+      class="font-semibold text-gray-800 text-lg group-hover:text-rose-500 transition-colors"
+    >
+      {{ product.title }}
+    </h3>
+
+    <div class="flex items-center gap-2">
+      <span class="text-xl font-bold text-gray-900">${{ product.price }}</span>
+    </div>
+
+    <!-- Add to Cart Button -->
+    <button
+      class="mt-2 w-full bg-rose-500 text-white font-medium py-2 rounded-xl hover:bg-rose-600 transition-colors flex items-center justify-center gap-2 shadow"
+    >
+      Add to Cart
+      <lucide-angular [img]="icons.cart" class="w-5 h-5"></lucide-angular>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-lg space-y-4">
+
+  <h2 class="text-xl font-bold mb-4">Order Confirmation</h2>
+
+  <!-- Customer Info -->
+  <div class="bg-gray-50 p-4 rounded-lg">
+    <div class="flex justify-between items-center mb-3">
+      <h3 class="font-semibold text-gray-800">Customer Info</h3>
+      <button *ngIf="!editingUser" (click)="toggleEditUser()"
+        class="text-sm text-rose-500 hover:text-rose-600">Edit</button>
+    </div>
+
+    <!-- بيانات ثابتة -->
+    <div *ngIf="!editingUser" class="space-y-1 text-gray-700">
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Phone:</strong> {{ user.phone }}</p>
+      <p><strong>Address:</strong> {{ user.address }}</p>
+    </div>
+
+    <!-- فورم التعديل -->
+    <div *ngIf="editingUser" class="space-y-3">
+      <input type="text" [(ngModel)]="user.name" placeholder="Name" class="w-full p-2 border rounded"/>
+      <input type="email" [(ngModel)]="user.email" placeholder="Email" class="w-full p-2 border rounded"/>
+      <input type="text" [(ngModel)]="user.phone" placeholder="Phone" class="w-full p-2 border rounded"/>
+      <input type="text" [(ngModel)]="user.address" placeholder="Address" class="w-full p-2 border rounded"/>
+      <div class="flex gap-2 mt-2">
+        <button (click)="saveUserChanges()" class="bg-rose-500 hover:bg-rose-600 text-white py-2 px-4 rounded-lg font-semibold">Save</button>
+        <button (click)="toggleEditUser()" class="border border-gray-300 text-gray-700 py-2 px-4 rounded-lg">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Items -->
+  <div class="bg-gray-50 p-4 rounded-lg">
+    <h3 class="font-semibold mb-2">Items</h3>
+    <div *ngFor="let item of cart.items" class="flex justify-between py-2 border-b last:border-b-0">
+      <div>{{ item.product.title }} x {{ item.quantity }}</div>
+      <div>${{ (item.price * item.quantity).toFixed(2) }}</div>
+    </div>
+  </div>
+
+  <!-- Total -->
+  <div class="bg-gray-50 p-4 rounded-lg flex justify-between font-bold text-gray-800">
+    <span>Total</span>
+    <span>${{ cart.totalPrice.toFixed(2) }}</span>
+  </div>
+
+  <!-- Confirm Button -->
+  <div class="flex justify-center mt-4">
+    <button (click)="confirmOrder()" class="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg font-semibold">
+      Confirm Order
+    </button>
+  </div>
+</div>

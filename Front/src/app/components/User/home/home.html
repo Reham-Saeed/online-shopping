@@ -1,0 +1,56 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Hero Section -->
+  <section
+    class="relative h-96 bg-cover bg-center overflow-hidden"
+    style="background-image: url('images/cover.jpg')"
+  >
+    <!-- Overlay لتوضيح النص -->
+    <div class="absolute inset-0 bg-black opacity-30"></div>
+
+    <!-- محتوى النصوص -->
+    <div class="relative z-10 container mx-auto px-4 h-full flex items-center">
+      <div class="max-w-2xl text-white">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+          Discover Your Style
+        </h1>
+        <p class="text-lg md:text-xl mb-6 text-gray-200">
+          Explore our curated collection of premium clothing for every occasion
+        </p>
+        <a
+          routerLink="/products"
+          class="inline-flex items-center bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+        >
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Shop by Category</h2>
+        <p class="text-gray-600">Discover our latest collections</p>
+      </div>
+      <app-categories></app-categories>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 space-y-6">
+      <app-products-list></app-products-list>
+      <a
+        routerLink="/products"
+        class="text-rose-500 hover:text-rose-600 font-medium flex items-center group"
+      >
+        View All
+        <lucide-angular
+          [img]="icons.arrow_right"
+          class="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1"
+        ></lucide-angular>
+      </a>
+    </div>
+  </section>
+</div>

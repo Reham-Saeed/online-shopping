@@ -1,0 +1,147 @@
+<!-- Add Product Button -->
+<button
+  (click)="openModal()"
+  class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+>
+  Add Product
+</button>
+
+<!-- Products Table -->
+<table class="w-full mt-4 border border-gray-200 rounded-lg overflow-hidden">
+  <thead class="bg-gray-50 border-b border-gray-200">
+    <tr>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Product
+      </th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Category
+      </th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Price
+      </th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Stock
+      </th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Is Deleted
+      </th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-gray-200">
+    <tr
+      *ngFor="let product of products"
+      class="hover:bg-gray-50 transition-colors"
+    >
+      <td class="px-4 py-2">{{ product.title }}</td>
+      <td class="px-4 py-2">
+        {{ product.category.title }} / {{ product.subcategory.title }}
+      </td>
+      <td class="px-4 py-2">{{ product.price | currency }}</td>
+      <td class="px-4 py-2">{{ product.stock }}</td>
+      <td class="px-4 py-2">{{ product.isDeleted }}</td>
+      <td class="px-4 py-2 text-right">
+        <button
+          (click)="openModal(product)"
+          class="px-2 py-1 text-green-600 hover:bg-green-50 rounded-lg"
+        >
+          Edit
+        </button>
+        <button
+          (click)="toggleDelete(product)"
+          [ngClass]="
+            product.isDeleted
+              ? 'text-gray-400 hover:bg-gray-100'
+              : 'text-red-600 hover:bg-red-50'
+          "
+          class="px-2 py-1 rounded-lg"
+        >
+          {{ product.isDeleted ? "Restore" : "Delete" }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-xl w-full max-w-lg p-6 shadow-lg">
+    <h2 class="text-xl font-bold mb-4">
+      {{ editingProduct ? "Edit Product" : "Add Product" }}
+    </h2>
+
+    <form [formGroup]="productForm" (ngSubmit)="submitForm()" class="space-y-4">
+      <input
+        formControlName="title"
+        placeholder="Product Name"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <input
+        formControlName="description"
+        placeholder="Description"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <input
+        formControlName="price"
+        type="number"
+        placeholder="Price"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <input
+        formControlName="stock"
+        type="number"
+        placeholder="Stock"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <input
+        formControlName="route"
+        placeholder="Route"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <select
+        formControlName="category"
+        (change)="onCategoryChange($event)"
+        class="w-full px-4 py-2 border rounded"
+      >
+        <option value="">Select Category</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">
+          {{ cat.title }}
+        </option>
+      </select>
+
+      <select
+        formControlName="subcategory"
+        class="w-full px-4 py-2 border rounded"
+      >
+        <option value="">Select Subcategory</option>
+        <option *ngFor="let sub of subcategories" [value]="sub._id">
+          {{ sub.title }}
+        </option>
+      </select>
+
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        class="w-full px-4 py-2 border rounded"
+      />
+
+      <div class="flex gap-3 pt-6">
+        <button
+          type="submit"
+          class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+        >
+          {{ editingProduct ? "Update Product" : "Add Product" }}
+        </button>
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

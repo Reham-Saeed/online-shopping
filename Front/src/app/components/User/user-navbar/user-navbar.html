@@ -1,0 +1,133 @@
+<!-- src/app/navbar/navbar.component.html -->
+<nav class="bg-white shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <a
+        routerLink="/home"
+        class="text-2xl font-bold text-slate-800 hover:text-rose-500 transition-colors"
+      >
+        StyleHub
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          routerLink="/home"
+          [ngClass]="{
+            'text-rose-500': isActive('/'),
+            'text-gray-700': !isActive('/')
+          }"
+          class="hover:text-rose-500 transition-colors"
+          >Home</a
+        >
+
+        <!-- Categories Dropdown -->
+        <div class="relative">
+          <a
+            routerLink="/categories"
+            [ngClass]="{
+              'text-rose-500': isActive('/categories'),
+              'text-gray-700': !isActive('/categories')
+            }"
+            class="hover:text-rose-500 transition-colors"
+            >Categories</a
+          >
+        </div>
+
+        <a
+          routerLink="/products"
+          [ngClass]="{
+            'text-rose-500': isActive('/products'),
+            'text-gray-700': !isActive('/products')
+          }"
+          class="hover:text-rose-500 transition-colors"
+          >Products</a
+        >
+        <a
+          routerLink="/testimonials"
+          [ngClass]="{
+            'text-rose-500': isActive('/testimonials'),
+            'text-gray-700': !isActive('/testimonials')
+          }"
+          class="hover:text-rose-500 transition-colors"
+          >Testimonials</a
+        >
+        <a
+          routerLink="/faq"
+          [ngClass]="{
+            'text-rose-500': isActive('/faq'),
+            'text-gray-700': !isActive('/faq')
+          }"
+          class="hover:text-rose-500 transition-colors"
+          >FAQ</a
+        >
+      </div>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center space-x-4">
+        <button class="p-2 text-gray-600 hover:text-rose-500 transition-colors">
+          <lucide-angular [img]="SearchIcon" class="my-icon"></lucide-angular>
+        </button>
+        <button class="p-2 text-gray-600 hover:text-rose-500 transition-colors">
+          <lucide-angular [img]="UserIcon" class="my-icon"></lucide-angular>
+        </button>
+        <a
+          routerLink="/cart"
+          class="relative p-2 text-gray-600 hover:text-rose-500 transition-colors"
+        >
+          <lucide-angular [img]="CartIcon" class="my-icon"></lucide-angular>
+          <span
+            *ngIf="false"
+            class="absolute -top-1 -right-1 bg-rose-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+          >
+            3
+          </span>
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden p-2 text-gray-600" (click)="toggleMenu()">
+          <lucide-angular
+            *ngIf="!isMenuOpen"
+            [img]="MenuIcon"
+            class="my-icon"
+          ></lucide-angular>
+          <lucide-angular
+            *ngIf="isMenuOpen"
+            [img]="CloseIcon"
+            class="my-icon"
+          ></lucide-angular>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="md:hidden border-t border-gray-200">
+      <div class="py-4 space-y-2">
+        <a routerLink="/" class="block py-2 text-gray-700 hover:text-rose-500"
+          >Home</a
+        >
+        <a
+          routerLink="/categories"
+          class="block py-2 text-gray-700 hover:text-rose-500"
+          >Categories</a
+        >
+        <a
+          routerLink="/products"
+          class="block py-2 text-gray-700 hover:text-rose-500"
+          >Products</a
+        >
+        <a
+          routerLink="/testimonials"
+          class="block py-2 text-gray-700 hover:text-rose-500"
+          >Reviews</a
+        >
+        <a
+          routerLink="/faq"
+          class="block py-2 text-gray-700 hover:text-rose-500"
+          >FAQ</a
+        >
+      </div>
+    </div>
+  </div>
+</nav>

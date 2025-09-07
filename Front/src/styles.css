@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* styles.css أو hero.component.css */
+.hero-section {
+  background-image: url('../public/images/cover.jpg');
+  background-size: cover; /* يغطي كل المساحة */
+  background-position: center; /* يركّز الصورة */
+}

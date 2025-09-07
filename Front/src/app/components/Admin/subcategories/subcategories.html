@@ -1,0 +1,114 @@
+<!-- Add Subcategory Button -->
+<button
+  (click)="openModal()"
+  class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+>
+  Add Subcategory
+</button>
+
+<!-- Subcategories Table -->
+<table class="w-full mt-4 border border-gray-200 rounded-lg overflow-hidden">
+  <thead class="bg-gray-50 border-b border-gray-200">
+    <tr>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Subcategory
+      </th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Category
+      </th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Is Deleted
+      </th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">
+        Actions
+      </th>
+    </tr>
+  </thead>
+  <tbody class="divide-y divide-gray-200">
+    <tr
+      *ngFor="let sub of subcategories"
+      class="hover:bg-gray-50 transition-colors"
+    >
+      <td class="px-4 py-2">{{ sub.title }}</td>
+      <td class="px-4 py-2">{{ sub.category.title }}</td>
+      <td class="px-4 py-2">{{ sub.isDeleted }}</td>
+      <td class="px-4 py-2 text-right">
+        <button
+          (click)="openModal(sub)"
+          class="px-2 py-1 text-green-600 hover:bg-green-50 rounded-lg"
+        >
+          Edit
+        </button>
+        <button
+          (click)="toggleDelete(sub)"
+          [ngClass]="
+            sub.isDeleted
+              ? 'text-gray-400 hover:bg-gray-100'
+              : 'text-red-600 hover:bg-red-50'
+          "
+          class="px-2 py-1 rounded-lg"
+        >
+          {{ sub.isDeleted ? "Restore" : "Delete" }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-xl w-full max-w-lg p-6 shadow-lg">
+    <h2 class="text-xl font-bold mb-4">
+      {{ editingSubcategory ? "Edit Subcategory" : "Add Subcategory" }}
+    </h2>
+
+    <form
+      [formGroup]="subcategoryForm"
+      (ngSubmit)="submitForm()"
+      class="space-y-4"
+    >
+      <input
+        formControlName="title"
+        placeholder="Subcategory Name"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <select
+        formControlName="category"
+        class="w-full px-4 py-2 border rounded"
+      >
+        <option value="">Select Category</option>
+        <option *ngFor="let cat of categories" [value]="cat._id">
+          {{ cat.title }}
+        </option>
+      </select>
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <input
+        formControlName="route"
+        placeholder="Subcategory Route"
+        class="w-full px-4 py-2 border rounded"
+      />
+      <div class="flex gap-3 pt-6">
+        <button
+          type="submit"
+          class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+        >
+          {{ editingSubcategory ? "Update Subcategory" : "Add Subcategory" }}
+        </button>
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

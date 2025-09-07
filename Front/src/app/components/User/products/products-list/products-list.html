@@ -1,0 +1,63 @@
+<div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+  <div class="flex flex-col lg:flex-row gap-4">
+    <!-- Search Bar -->
+    <div class="relative flex-1">
+      <input
+        type="text"
+        placeholder="Search products..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange($event)"
+        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+      />
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+    <select
+      [(ngModel)]="selectedCategory"
+      (change)="onCategoryChange(selectedCategory)"
+      class="px-4 py-3 border rounded-lg"
+    >
+      <option value="">All Categories</option>
+      <option *ngFor="let cat of categories" [value]="cat.title">
+        {{ cat.title }}
+      </option>
+    </select>
+
+    <select
+      [(ngModel)]="selectedSubcategory"
+      (change)="onSubcategoryChange(selectedSubcategory)"
+      [disabled]="!selectedCategory"
+      class="px-4 py-3 border rounded-lg"
+    >
+      <option value="">All Subcategories</option>
+      <option *ngFor="let sub of subcategories" [value]="sub.route">
+        {{ sub.title }}
+      </option>
+    </select>
+
+    <select
+      [(ngModel)]="sortBy"
+      (change)="onSortChange(sortBy)"
+      class="px-4 py-3 border rounded-lg"
+    >
+      <option value="">Featured</option>
+      <option value="price-low">Price: Low to High</option>
+      <option value="price-high">Price: High to Low</option>
+    </select>
+
+    <button (click)="clearFilters()" class="px-4 py-3 bg-gray-100 rounded-lg">
+      Clear Filters
+    </button>
+  </div>
+</div>
+
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+>
+  <app-product-card
+    *ngFor="let product of products"
+    [product]="product"
+  ></app-product-card>
+</div>
